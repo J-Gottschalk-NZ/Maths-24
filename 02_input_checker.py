@@ -46,15 +46,13 @@ numbers_used = []
 # choose a random set of numbers from the list
 numbers = random.choice(sets)
 
+# change numbers to string
 string_numbers = []
 for item in numbers:
   string_numbers.append(str(item))
 
 # add numbers to list
 valid_chars = valid_symbols + string_numbers
-
-print("valid chars: ", valid_chars)
-
 
 # Ask user question
 statement_generator("Welcome to the 24 Game", "-", 3)
@@ -68,10 +66,14 @@ print("Can you use +, -, * and / to get the number 24? ")
 
 ans_ok = False
 while not ans_ok or invalid_chars == "yes":
-  user_ans = input("Type your expression here: ")
+  user_ans = input("Type your expression here: ").lower()
+
+  # replace 'x' and '×' with *
+  user_ans = user_ans.replace('x', '*' )
+  user_ans = user_ans.replace('×', '*')
   
   for character in user_ans:
-    print(character)
+    
     if character not in valid_chars:
       statement_generator("Eek, you are using invalid characters", "#", 3)
       invalid_chars = "yes"
