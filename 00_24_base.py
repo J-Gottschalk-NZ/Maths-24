@@ -1,6 +1,21 @@
 import random
+import re
+
+# adds * sign between numbers and brackets
+# replaces x with *
+def times_adder(expression):
+
+    # replace 'x' and '×' with *
+  expression = expression.replace('x', '*' )
+  expression = expression.replace('×', '*')
+  
+  # RegEx from here...
+  # https://stackoverflow.com/questions/53228036/insert-multiplication-sign-between-parenthesis
+  return re.sub('(?<=\d|\))(\()', '*(', expression)
 
 # decorates text
+
+# Statement decorator
 def statement_generator(statement, decoration, style):
   middle = decoration * 3 + " " + statement + " " + decoration * 3
   top_bottom = decoration * len(middle)
@@ -24,6 +39,7 @@ def statement_generator(statement, decoration, style):
 # ***** Main Routine Goes here *****
 
 # Sets from http://mbamp.ucsc.edu/files/7915/4393/8152/Maths_24_-_cards.pdf
+
 sets = [
   [2,2,8,6],
   [2,2,4,5],
@@ -54,6 +70,7 @@ valid_chars = valid_symbols + string_numbers
 # Ask user question
 statement_generator("Welcome to the 24 Game", "-", 3)
 print()
+
 print("You are given the following numbers:")
 for item in numbers:
   print(item, end = "\t")
@@ -66,11 +83,10 @@ while not ans_ok or invalid_chars == "yes":
 
   # list to check that all numbers are used...
   numbers_used = []
-  user_ans = input("Type your expression here: ").lower()
+  raw_user_ans = input("Type your expression here: ").lower()
 
-  # replace 'x' and '×' with *
-  user_ans = user_ans.replace('x', '*' )
-  user_ans = user_ans.replace('×', '*')
+  # add multiply signs between brackets if needed
+  user_ans = times_adder(raw_user_ans)
   
   for character in user_ans:
     
@@ -83,7 +99,7 @@ while not ans_ok or invalid_chars == "yes":
         numbers_used.append(character)
   
   if len(numbers_used) != 4:
-    print("You need to use each number once")
+    print("You need to use each number once, you have used {} numbers".format(len(numbers_used)))
 
   else:
     ans_ok = True
@@ -95,3 +111,4 @@ if user_value == 24:
   print("well done!  You got it")
 else:
   print("sorry that is not correct")
+  print("{} = {}".format(raw_user_ans, user_value))

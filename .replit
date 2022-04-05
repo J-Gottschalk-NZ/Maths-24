@@ -1,2 +1,2 @@
 language = "python3"
-run = "python 02_input_checker.py"
+run = "python 00_24_base_v2.py"
