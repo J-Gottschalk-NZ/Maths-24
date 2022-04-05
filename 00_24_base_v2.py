@@ -32,35 +32,22 @@ def statement_generator(statement, decoration, style):
     # adds decoration to line only
     print(middle)
 
-  print()
+  # print()
 
   return ""
 
-# ***** Main Routine Goes here *****
-
-# Sets from http://mbamp.ucsc.edu/files/7915/4393/8152/Maths_24_-_cards.pdf
 
 
 def input_checker(string_numbers):
 
-
   valid_symbols = ["+", "-", "*", "/", "(", ")", " "]
-  
-  # # change numbers to string
-  # string_numbers = []
-  # for item in numbers:
-  #   string_numbers.append(str(item))
-  
+   
   # add numbers to list
   valid_chars = valid_symbols + string_numbers
 
   valid = False
   while not valid:
     numbers_used = []
-
-    print("\nYour numbers are...")
-    for item in string_numbers:
-      print(item, end = "\t")
 
     print("\n")
     
@@ -86,25 +73,16 @@ def input_checker(string_numbers):
 
 # ***** Main Routine Goes here *****
 
-# Sets from http://mbamp.ucsc.edu/files/7915/4393/8152/Maths_24_-_cards.pdf
-
-  
-# ***** Main Routine Starts Here  *****
-
-# Initialise variables / set up questions
-
-rounds = 0
-
-valid_symbols = ["+", "-", "*", "/", "(", ")", " "]
 
 # get sets of numbers from .csv file
+# Sets from http://mbamp.ucsc.edu/files/7915/4393/8152/Maths_24_-_cards.pdf
 with open('all_sets.csv', newline='') as f:
     reader = csv.reader(f)
     sets = list(reader)
 
 # Heading
 statement_generator("Welcome to the 24 Game", "-", 3)
-print()
+
   
 # Ask user if they have played before / show instructions
 
@@ -112,6 +90,11 @@ print()
 var_numbers = random.choice(sets)
 
 num_attempts = 0
+
+# Give Numbers...
+print("\nYour numbers are...")
+for item in var_numbers:
+  print(item, end = "\t")
 
 # Loop for questions...
 status = ""
@@ -129,10 +112,15 @@ while status == "":
   if var_ans == 24:
     feedback = "well done, you got it"
     status = "correct"
+    var_decoration = "😊"
 
   else:
     feedback = "sorry {} = {}.  Please try again".format(var_raw_ans, var_ans)
+    var_decoration = "🍕"
 
-  print(feedback)
+  statement_generator(feedback, var_decoration, 1)
 
-print("You solved the problem in {} attempts".format(num_attempts))
+if num_attempts == 1:
+  print("\nGreat job - you got it on the first try")
+else: 
+  print("\nYou solved the problem in {} attempts".format(num_attempts))
