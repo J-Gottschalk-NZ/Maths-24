@@ -1,6 +1,7 @@
 import random
 import csv
 import re
+from symtable import Symbol
 
 # adds * sign between numbers and brackets
 # replaces x with *
@@ -104,7 +105,13 @@ while status == "":
   answers = input_checker(var_numbers)
   
   var_raw_ans = answers[0]
-  var_ans = eval(answers[1])
+  
+  try:
+    var_ans = eval(answers[1])
+    
+  except SyntaxError:
+    print("Oops something went wrong.  You might have unclosed brackets / operators that are not separated by numbers")
+    continue
 
   num_attempts += 1
 
