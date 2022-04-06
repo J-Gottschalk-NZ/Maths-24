@@ -4,6 +4,8 @@ def get_color_escape(r, g, b, background=False):
     return '\033[{};2;{};{};{}m'.format(38, r, g, b)
 
 # Changes colour...
-print(get_color_escape(255, 125, 0) + 'Fancy colors!')
+def print_colour(r, g, b, text):
+    print(get_color_escape(r, g, b) + text + '\033[0;0m')
 
-print("\033[3;32;40m Bright Green  \n")
+print_colour(255, 255, 0, "Hello World")
+print("oops")

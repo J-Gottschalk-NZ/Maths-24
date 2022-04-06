@@ -2,7 +2,8 @@ import random
 import csv
 import re
 
-# Class for coloured text
+# Class for coloured text, used for error generator 
+# (and other text colouring functions)
 class Color_It():
     
     def __init__(self, red, green, blue, text):
@@ -29,9 +30,7 @@ def not_blank(question):
     if response != "":
       return response
     else:
-      not_blank_msg = "Sorry - your name can't be blank"
-      not_blank_pink = Color_It(255, 175, 175, not_blank_msg)
-      print(not_blank_pink.print_colour())
+      error_generator("Sorry - your name can't be blank")
       print()
     
     print()
@@ -72,6 +71,10 @@ def statement_generator(statement, decoration, style):
   return ""
 
 
+def error_generator(message):
+    error_pink = Color_It(255, 175, 175, message)
+    print(error_pink.print_colour())
+
 # checks expression is valid
 def input_checker(string_numbers):
 
@@ -100,9 +103,7 @@ def input_checker(string_numbers):
         
         error = "yes"
         
-        invalid_chars_msg = "Oops - the '{}' character  is not allowed in your expression for this problem".format(character)
-        invalid_chars_pink = Color_It(255, 175, 175, invalid_chars_msg)
-        print(invalid_chars_pink.print_colour())
+        error_generator("Oops - the '{}' character  is not allowed in your expression for this problem".format(character))
         print()
         
         break
@@ -114,9 +115,7 @@ def input_checker(string_numbers):
       pass
     
     elif len(numbers_used) != 4:
-      numbers_msg = "You need to use each number once, you have used {} numbers".format(len(numbers_used))
-      numbers_msg_pink = Color_It(255, 175, 175, numbers_msg)
-      print(numbers_msg_pink.print_colour())
+      error_generator("You need to use each number once, you have used {} numbers".format(len(numbers_used)))
   
     else:
       return [raw_user_ans, user_ans]
@@ -129,6 +128,10 @@ def input_checker(string_numbers):
 with open('all_sets.csv', newline='') as f:
     reader = csv.reader(f)
     sets = list(reader)
+
+# lists with emoji for feedback...
+correct_emoji = ["😊", "😁", "😍", "😇", "😎", "👍", "⭐"]
+wrong_emoji = ["😢", "💥", "😭", "👎", "💔"]
 
 # Heading
 statement_generator("Welcome to the 24 Game", "-", 3)
@@ -161,9 +164,7 @@ while status == "":
     
   except SyntaxError:
     # out put error message (pink text)
-    syntax_error_msg = "Oops something went wrong.  You might have unclosed brackets / operators that are not separated by numbers"
-    syntax_error_pink = Color_It(255, 175, 175, syntax_error_msg)
-    print(syntax_error_pink.print_colour())
+    error_generator("Oops something went wrong.  You might have unclosed brackets / operators that are not separated by numbers")
     
     print("")
     continue
@@ -174,11 +175,11 @@ while status == "":
   if var_ans == 24:
     feedback = "well done, you got it"
     status = "correct"
-    var_decoration = "😊"
+    var_decoration = random.choice(correct_emoji)
 
   else:
     feedback = "sorry {} = {}.  Please try again".format(var_raw_ans, var_ans)
-    var_decoration = "🍕"
+    var_decoration = random.choice(wrong_emoji)
 
   statement_generator(feedback, var_decoration, 1)
 
