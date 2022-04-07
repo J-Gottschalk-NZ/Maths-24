@@ -160,6 +160,9 @@ def instructions():
     
     Your job is to make the number 24 using all four numbers 
     and the operators +, -,  x and ÷ (/) 
+
+    *** IMPORTANT ***
+    Use the '/' symbol for division!!
     
     Expressions are checked using BEDMAS / BEMA which means that 
     you will often need to use brackets.
